@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: vipinpr77/spring-boot-app:4
+        image: vipinpr77/spring-boot-app:{{IMAGE_TAG}}
         ports:
         - containerPort: 8080
