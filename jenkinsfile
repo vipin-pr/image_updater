@@ -18,6 +18,8 @@ pipeline {
         environment {
             GIT_REPO_NAME = "image_updater"
             GIT_USER_NAME = "vipin-pr"
+            def imageTag = ${BUILD_NUMBER}
+            env.IMAGE_TAG = imageTag
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
@@ -25,7 +27,8 @@ pipeline {
                     git config user.email "vipinrajan77@gmail.com"
                     git config user.name "vipin-pr"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
+                    #sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
+                    sh "sed -i 's/{{IMAGE_TAG}}/${env.IMAGE_TAG}/g' deployment.yml"
                     git add deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
