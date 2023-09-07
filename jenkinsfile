@@ -19,7 +19,7 @@ pipeline {
             GIT_REPO_NAME = "image_updater"
             GIT_USER_NAME = "vipin-pr"
             def imageTag = "${BUILD_NUMBER}"
-            env.IMAGE_TAG = imageTag
+            env.IMAGE_TAG = "${imageTag}"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
